@@ -4,10 +4,10 @@ name: CI/CD Frontend
 #controla lo que se va a ejecutar (Trigger) push,pull,pull request 
 on:
     push: 
-        branches: [release, develop, feature/auth]
+        branches: [release, develop]
 
     pull_request:
-        branches: [release, develop, feature/auth]
+        branches: [release, develop]
 
 #Pasos a realizar
 jobs: 
