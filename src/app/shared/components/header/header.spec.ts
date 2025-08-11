@@ -1,20 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Header } from './header';
+import { HeaderComponent } from './header.component';
 import { MaterialModule } from '../../../material.module';
+import { RouterModule } from '@angular/router';
 
 describe('Header', () => {
-  let component: Header;
-  let fixture: ComponentFixture<Header>;
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaterialModule],
-      declarations: [Header]
+      imports: [MaterialModule, RouterModule],
+      declarations: [HeaderComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Header);
+    fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

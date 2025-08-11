@@ -1,7 +1,10 @@
+// src/app/pages/auth/auth.ts
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { BaseForm } from '../../shared/utils/base.form';
+import { Router } from '@angular/router';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -11,38 +14,51 @@ import { BaseForm } from '../../shared/utils/base.form';
 })
 export class Auth implements OnInit, OnDestroy {
   hide = true;
-
   private destroy$ = new Subject<any>();
+
   loginForm = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', [Validators.required, Validators.minLength(3)]]
-  })
+  });
 
-  constructor(private fb: FormBuilder, 
-              public baseForm: BaseForm) {
-
-    console.log("init constructor")
-  }
+  constructor(
+    private fb: FormBuilder,
+    public baseForm: BaseForm,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    console.log("init OnInit")
+    console.log("init OnInit");
   }
 
-  onSubmit() {
-
+  onLogin(): void {
+    console.log("¿Formulario válido?", this.loginForm.valid);
     if (this.loginForm.invalid) return;
 
-    const form = this.loginForm.value;
+    const { username, password } = this.loginForm.value;
 
-    console.log(form);
+    // Ensure username and password are strings
+    const safeUsername: string = username ?? '';
+    const safePassword: string = password ?? '';
+
+    this.authService
+      .login(safeUsername, safePassword)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          console.log("Inicio de sesión exitoso");
+          this.router.navigate(['/home']);
+        },
+        error: err => {
+          console.error("Error al iniciar sesión", err);
+          // Aquí podrías mostrar un mensaje al usuario con mat-error, snackbar, etc.
+        }
+      });
   }
 
   ngOnDestroy(): void {
-
     this.destroy$.next({});
     this.destroy$.complete();
   }
-
 }
-
- 

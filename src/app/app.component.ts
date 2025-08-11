@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   standalone: false,
   styleUrl: './app.scss'
 })
-export class App {
+export class AppComponent {
   protected title = 'sistema-ventas-smoi-giri5091-app';
 }

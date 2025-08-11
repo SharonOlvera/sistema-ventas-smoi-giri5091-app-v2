@@ -1,0 +1,34 @@
+<mat-toolbar color="primary" class="toolbar">
+  <!-- Botón de menú que redirige a home -->
+  <button mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a style="margin-left: 2mm;">Sistema de ventas</a>
+  <span class="spacer"></span>
+
+  <!-- Si el usuario está logeado -->
+  <ng-container *ngIf="data && data.nombre; else mostrarLogin">
+    <span class="usuario">
+      {{ data.nombre }} {{ data.apellidos }}
+    </span>
+
+    <span class="spacer"></span>
+
+    <button mat-raised-button color="accent" (click)="logout()">
+      Cerrar sesión
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="data">
+    <span>Bienvenido, {{ data.nombre }} {{ data.apellidos }}</span>
+    <button mat-button (click)="logout()">Cerrar sesión</button>
+  </ng-container>
+
+
+  <!-- Si NO está logeado -->
+  <ng-template #mostrarLogin>
+        <button mat-button (click)="navegarLogin()">
+            Iniciar sesión
+        </button>
+    </ng-template>
+</mat-toolbar>
