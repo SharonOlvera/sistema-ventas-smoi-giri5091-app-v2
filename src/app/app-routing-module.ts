@@ -14,7 +14,7 @@ const routes: Routes = [
       import('./pages/home/home-module').then((m) => m.HomeModule),
     canActivate: [CheckLoginGuard],
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({
